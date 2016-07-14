@@ -6,6 +6,7 @@
     <style>
         * {
             margin:0;padding:0;
+            font-family:simsun;
         }
         p {
             background:yellow;
@@ -36,9 +37,19 @@
         }
         #vertical-align {
             line-height:100px;
-            font-size:50px;
+            font-size:40px;
             background:lightblue;
         }
+        .vertical-align-img {
+            line-height:150px;
+            border:1px solid #000;
+            font-size:14px;
+        }
+        .vertical-align-img img {
+            vertical-align:middle;
+            border:1px solid #000;
+        }
+
     </style>
 </head>
 <body>
@@ -49,13 +60,33 @@
     <div class="line"></div>
     <div class="distance">100px</div>
     <div>
-        行高是说两行文字的基线的距离，一般基线可以理解为x的下边缘的位置
+        行高是说两行文字的基线的距离，一般基线可以理解为x的下边缘的位置(在字体为simsun前提下)
     </div>
     <div style="position:relative">
         <div id="vertical-align">真的垂直居中了吗，国，spinx？</div>
         <div class="vertical-align-line"></div>
     </div>
     <div>行高可以让单行文本近似垂直居中</div>
-
+    <div class="vertical-align-img" id="vertical-align-img">
+        <img src="t01d1f1a2ae31e3c3e4.png"/>x
+    </div>
+    font-size:0<input type="range" min="0" max="100" value="14" id="range-img"/>100
+    <div>行高与图片近似垂直居中(vertical-align:middle在font-size为0时绝对垂直居中)</div>
+    <script>
+        console.log(document.querySelector('#range-img'));
+        document.querySelector('#range-img').onchange = function(event) {
+            var value = event.target.value;
+            document.querySelector('#vertical-align-img').style.fontSize = value + 'px';
+        };
+    </script>
+    <h1>行内框盒子模型</h1>
+    <h2>1.内容区域(Content Area),可以理解成选中的区域</h2>
+    <img src="contentarea.jpg"/>
+    <h2>2.内联盒子(Inline Boxes),inline标签盒子与匿名盒子(光秃秃的文字)</h2>
+    <img src="inlineboxes.jpg"/>
+    <h2>3.行框盒子(Line Boxes),每一行就是一个"行框盒子"</h2>
+    <img src="lineboxes.png"/>
+    <h2>4.包含盒子(Containing Boxes),包含盒子</h2>
+    <img src="containingboxes.png"/>
 </body>
 </html>
