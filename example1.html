@@ -49,7 +49,10 @@
             vertical-align:middle;
             border:1px solid #000;
         }
-
+        b {
+            font-family: "Microsoft YaHei";
+        }
+        h2 {margin:10px;}
     </style>
 </head>
 <body>
@@ -88,5 +91,62 @@
     <img src="lineboxes.png"/>
     <h2>4.包含盒子(Containing Boxes),包含盒子</h2>
     <img src="containingboxes.png"/>
+    <div style="font-size:50px;border:1px solid #000;line-height:0;margin-top:50px;">测试</div>
+    <div style="font-size:0px;border:1px solid #000;line-height:100px;margin-top:50px;">测试</div>
+    <h2>内联元素的高度是由line-height决定的,而不是由font-size决定的!</h2>
+    <h2>1.行高由于其继承性,影响无处不在,即使单行文本也不例外</h2>
+    <h2>2.行高只是幕后黑手,<b>高度的表现不是行高</b>,而是<font color="red">内容区域</font>和<font color="red">行间距</font></h2>
+    <h2>内容区域高度(Content Area)+行间距(Vertical Spacing)=行高(Line Height)</h2>
+    <h2>1.<font color="red">内容区域</font>高度只与<font color="red">字号</font>以及<font color="red">字体</font>有关,与line-height没有任何关系</h2>
+    <h2>2.在simsun字体下,内容区域高度等于文字大小值</h2>
+    <h2>行间距计算公式:line-height - font-size</h2>
+    <h2>半行间距计算公式:(line-height - font-size) / 2</h2>
+    <div style="padding:100px;">
+        <div id="wrap_tag" class="wrap" style="border:1px solid #000;position:relative;background:yellow;">
+            <span id="span_tag" style="font-size:240px;line-height:360px;outline:2px solid #000;background:#fff;">sphinx</span>
+            <em style="position:absolute;top:0;right:0" id="em_tag">simsun 240</em>
+        </div>
+        <input  type="radio" id="r1" value="Microsoft Yahei" name="font-family"/><label for="r1">Yahei</label>
+        <input  type="radio" id="r2" value="simsun" name="font-family" checked/><label for="r2">Simsun</label>
+    </div>
+
+    <script>
+        var r1 = document.querySelector("#r1");
+        var r2 = document.querySelector("#r2");
+        var em_tag = document.querySelector("#em_tag");
+        var span_tag = document.querySelector("#span_tag");
+        var wrap_tag = document.querySelector("#wrap_tag");
+        r1.onclick = r2.onclick=function(event) {
+            span_tag.style.fontFamily = event.target.value;
+            em_tag.innerHTML = event.target.value + ' ' + span_tag.offsetHeight;
+        };
+    </script>
+    <h2>行高决定内联盒子高度;行间距墙头草,可大可小(甚至负值),保证高度正好等同于行高.</h2>
+    <h2>如果行框盒子里面有多个不同行高的内联盒子,行高不一定由最高的那个内联盒子决定.</h2>
+    <p id="p1" style="line-height:120px;">这是一行普通的文本,点击显示行高</p>
+    <button onclick="document.getElementById('pr1').innerHTML = document.getElementById('p1').clientHeight">显示行高</button>
+    <p id="pr1"></p>
+
+    <p id="p2" style="margin-top:20px;line-height:120px;">这是一行普通的文本,里面有个<em style="vertical-align: 40px;">em</em>标签</p>
+    <button onclick="document.getElementById('pr2').innerHTML = document.getElementById('p2').clientHeight">显示行高</button>
+    <p id="pr2"></p>
+    <h2>多行文本的高度就是单行文本高度的累加</h2>
+    <h2>line-height:normal(默认值),跟着浏览器走,且与元素字体关联</h2>
+    <h2>line-height:1.5,使用数值作为行高值,根据当前元素的font-size大小计算,例如font-size:20px;line-height:1.5,则真正的行高为30px</h2>
+    <h2>line-height:30px;使用固定大小</h2>
+    <h2>line-height:150%;相对于设置了该line-height的font-size进行计算</h2>
+    <h2>
+        line-height:1.5与line-height:150%的区别:<br />
+        1.line-height:1.5,所有可继承元素根据font-size重新计算行高<br />
+        2.line-height:150%,当前元素根据font-size计算行高,然后把计算后的值,继承给下面的元素
+    </h2>
+    <h2>
+        行高可以与font-size一同设置<br />
+        body {
+            font-size:14px/1.4286 simsun;
+        }
+    </h2>
+
+
 </body>
 </html>
