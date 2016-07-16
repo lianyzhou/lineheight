@@ -146,7 +146,75 @@
             font-size:14px/1.4286 simsun;
         }
     </h2>
-
-
+    <p style="background:gray;" id="img_p"><img src="blue.jpg"/>x</p>
+    <input type="number" id="img_p_num" value="100"/>
+    <label><input type="radio" value="baseline" name="v_align"/>baseline</label>
+    <label><input type="radio" value="middle" name="v_align"/>middle</label>
+    <label><input type="radio" value="top" name="v_align"/>top</label>
+    <label><input type="radio" value="bottom" name="v_align"/>bottom</label>
+    <br/>
+    <label><input type="radio" value="inline-block" name="display"/>inline-block</label>
+    <label><input type="radio" value="inline" name="display"/>inline</label>
+    <label><input type="radio" value="block" name="display"/>block</label>
+    <script>
+        document.getElementById('img_p_num').onkeyup = function(event) {
+            var value = event.target.value;
+            document.getElementById('img_p').style.lineHeight = value + 'px';
+        };
+    </script>
+    <h2>行高并不会影响图片的高度,造成高度影响的是文字,默认vertical-align:baseline,所以,会和x下边缘对齐</h2>
+    <script>
+        document.getElementsByName("v_align").forEach(function(dom) {
+            dom.onclick = function(event) {
+                var align = event.target.value;
+                var img = document.getElementById('img_p').getElementsByTagName('img')[0];
+                img.style.verticalAlign = align;
+                var text = img.nextSibling;
+                if(!text) {
+                    var textNode = document.createTextNode('x');
+                    document.getElementById('img_p').appendChild(textNode);
+                }
+            };
+        });
+        document.getElementsByName('display').forEach(function(dom) {
+            dom.onclick = function() {
+                var img_p = document.getElementById('img_p');
+                img_p.childNodes.forEach(function(node) {
+                    if(node.nodeType === 3) {
+                        node.parentNode.removeChild(node);
+                    }
+                });
+                var display = event.target.value;
+                document.getElementById('img_p').getElementsByTagName('img')[0].style.display = display;
+            };
+        });
+    </script>
+    <h2>即使,没有x文本,也会是这样,可以理解p标签内存在一个隐匿文本节点</h2>
+    <h2>小图片和大文字</h2>
+    <p><img src="ico.png" id="ico"/>x这是一段文字,可以使用vertical-align控制小图标位置</p>
+    <input type="range" id="range_ico" value="10" min="-100" max="100"/>
+    <span id="ico_range_text"></span>
+    <script>
+        document.getElementById('range_ico').onchange = function(event) {
+            var val = event.target.value;
+            document.getElementById('ico').style.verticalAlign = val + 'px';
+            document.getElementById('ico_range_text').innerHTML = val + 'px';
+        };
+    </script>
+    <h2>vertical-align:middle实际是基线往上1/2x的高度,并非绝对垂直居中</h2>
+    <h2>图片近似水平、垂直居中</h2>
+    <p style="line-height:300px;text-align:center;">
+        <img src="blue.jpg" style="vertical-align: middle;"/>x
+    </p>
+    <h2>多行文本水平、垂直居中</h2>
+    <p style="line-height:400px;text-align:center;">
+        <span style="width:80%;text-align:left;display:inline-block;line-height:normal;vertical-align:middle;">多行文本水平垂直居中实现的原理
+        跟上一页图片的实现是一样的,区别在于要把
+        多行文本所在的容器的display属性转换为
+        display:inline-block,以及重置外部继承
+        的text-align和line-height属性值.</span>
+        x
+    </p>
+    <h2>题外话:height:36px;line-height:36px;其中height:36px没什么用</h2>
 </body>
 </html>
